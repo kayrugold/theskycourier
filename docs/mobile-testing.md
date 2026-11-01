@@ -74,6 +74,14 @@ clear this localhost site's storage in Chrome to remove old cached versions.
 
 ## Portrait and landscape
 
+During mobile play, the map starts collapsed; tap MAP to inspect the route and
+CLOSE to return to the clear riding view. A compact top bar shows time and stats,
+with short pickup/delivery and fork directions below it. Only one brief notice
+appears along the bottom edge, prioritizing immediate threats over rewards.
+Routine collision explanations and missing-equipment reminders are suppressed.
+BOOST remains within thumb reach. Graphics, FPS, and sound controls are available
+on the menu and pause screen instead of covering the running game.
+
 The renderer uses the available viewport and updates on resize/rotation. The phone
 does not need a separate copy of the game for portrait mode. Portrait menus and HUD
 use responsive CSS, including safe-area spacing; wider desktop layouts remain

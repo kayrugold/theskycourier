@@ -1,3 +1,4 @@
+import {MobileHud} from './mobile-hud.js';
 import {CoinSequence} from './coin-audio.js';
 import {tripOverRoadwork} from './roadwork.js';
 import {updateBoardTricks} from './board-tricks.js';
@@ -496,6 +497,7 @@ document.addEventListener('pointerdown',()=>{if(worldEntered&&!sound.context)sou
 document.addEventListener('keydown',()=>{if(worldEntered&&!sound.context)sound.unlock(mode);},{capture:true});
 document.addEventListener('click',event=>{if(worldEntered&&event.target.closest('button,summary')){sound.unlock(mode);sound.play('click');}},{capture:true});
 let state=newRun(),mode='loading',elapsed=0,toastTimer=0,last=performance.now();
+const mobileHud=new MobileHud();
 const keys={left:false,right:false,accelerate:false,brake:false,duck:false};
 const touchInput={target:null,brake:0,slide:0,accelerate:false};
 let clearGestures=()=>{};
@@ -505,7 +507,7 @@ function toast(text,duration=2.4){
  if(matchMedia('(any-pointer: coarse)').matches)text=text.replace('W gas · S/C slide · A/D steer','Hold for gas · Swipe to steer/duck').replace(/press Space|Space/g,'tap').replace('then E','then tap the vehicle').replace('Shift uses one tank','BOOST uses one tank').replace('Shift / BOOST','Tap BOOST');
  $('toast').textContent=text;$('toast').style.opacity='1';toastTimer=duration;
 }
-function start(){if(!worldEntered)return;sound.unlock();sound.lastGrounded=true;sound.hornIn=8;deliveryArt.reset();movableObstacles.reset();environmentArt.contacts.clear();transfer=null;alex.reset();thiefArt.reset();birdArt.reset();state=newRun();coinSequence.reset();elapsed=0;mode='playing';clearKeys();for(const item of pickups){item.collected=false;item.mesh.visible=true;}for(const o of obstacles)o.hit=false;for(const c of cars){c.z=c.start;c.x=trafficLane(c,roofs)??c.homeX;c.braking=false;c.contact=false;Object.assign(c,trafficMotion(c.index,0),trafficSurface(c,roofs));c.driver=null;c.profileBraking=c.braking;}for(const id of ['menu','result','paused'])$(id).classList.add('hidden');$('hud').classList.remove('hidden');camera.position.set(0,3.6,-6.3);camera.fov=47;tone(420,.15);toast('First pickup: right sidewalk! W gas · S/C slide · A/D steer',3);updateHud();}
+function start(){if(!worldEntered)return;mobileHud.setMap(false);sound.unlock();sound.lastGrounded=true;sound.hornIn=8;deliveryArt.reset();movableObstacles.reset();environmentArt.contacts.clear();transfer=null;alex.reset();thiefArt.reset();birdArt.reset();state=newRun();coinSequence.reset();elapsed=0;mode='playing';clearKeys();for(const item of pickups){item.collected=false;item.mesh.visible=true;}for(const o of obstacles)o.hit=false;for(const c of cars){c.z=c.start;c.x=trafficLane(c,roofs)??c.homeX;c.braking=false;c.contact=false;Object.assign(c,trafficMotion(c.index,0),trafficSurface(c,roofs));c.driver=null;c.profileBraking=c.braking;}for(const id of ['menu','result','paused'])$(id).classList.add('hidden');$('hud').classList.remove('hidden');camera.position.set(0,3.6,-6.3);camera.fov=47;tone(420,.15);toast('First pickup: right sidewalk! W gas · S/C slide · A/D steer',3);updateHud();}
 function boostBoard(){if(mode!=='playing')return;if(activateBooster(state)){toast('BOARD BOOST! · Shift uses one tank',1.5);}else toast(state.boosterTanks?'Finish this boost or recover · jump off vehicles / release hitch first':'Collect an orange BOOST tank first',1.4);}
 function jump(){
  if(state.caught>0||state.handoff>0)return;
@@ -813,6 +815,7 @@ function updateHud(){document.getElementById('boost-status').textContent=state.t
   const gap=state.z-c.z-c.length/2,closing=c.speed-state.speed;
   return gap>0&&closing>0&&gap/closing<1.8&&Math.abs(c.x-state.x)<c.width/2+2&&state.y<c.height&&sameRoute(state.z,state.choices,c.choices);
  }).sort((a,b)=>(state.z-a.z-a.length/2)/(a.speed-state.speed)-(state.z-b.z-b.length/2)/(b.speed-state.speed))[0];
+ mobileHud.update(state,mode,activeStop(state),{rear,toast:$('toast').textContent,remaining:toastTimer});
  $('rear-warning').textContent=rear?`${rear.type.toUpperCase()} FROM BEHIND · ${rear.x>state.x+.8?'LEFT':rear.x<state.x-.8?'RIGHT':'MOVE ASIDE'} ↑`:'';
  $('glider-status').textContent=state.gliding?`GLIDER · ${state.glideRemaining.toFixed(1)}s LEFT`:state.flightReady?'GLIDER READY · SPACE TO OPEN':state.hasGlider?'GLIDER EQUIPPED · USE A RAMP / ROOFTOP':'GLIDER · COLLECT A CYAN WING';
  const seconds=Math.ceil(state.time);$('time').textContent=`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;$('time').style.color=seconds<20?'#ffad9e':'';$('speed').textContent=Math.round(state.speed*2.5);$('stamps').textContent=String(state.stamps).padStart(2,'0');$('condition').textContent=`${Math.round(state.condition)}%`;$('progress').style.width=`${Math.min(100,state.z/COURSE_LENGTH*100)}%`;$('district').textContent=state.z<COURSE_LENGTH/3?'01 / PAINTWORKS DISTRICT':state.z<COURSE_LENGTH*2/3?'02 / SUNSET VIADUCT':'03 / CLOCKTOWER SQUARE';const hint=$('hitch-hint');if(state.hitch){hint.style.display='block';const phase=(elapsed+state.hitch.index*2.7)%12;hint.textContent=state.hitch.warning?'BRAKE LIGHTS! RELEASE NOW':state.charge>=.5?(matchMedia('(any-pointer: coarse)').matches?'CHARGED · TAP VEHICLE TO SLINGSHOT':'CHARGED · E TO SLINGSHOT'):'CHARGING ROPE…';hint.style.background=state.hitch.warning?'#ffb29d':'#dbff78';}else{hint.style.background='#dbff78';hint.style.display=cars.some(c=>sameRoute(state.z,state.choices,c.choices)&&canHitch(state,c))?'block':'none';hint.textContent=matchMedia('(any-pointer: coarse)').matches?'TAP A VEHICLE TO HITCH':'BORROW SOME SPEED · E / HITCH';}$('touch-hitch').textContent=state.hitch?'SLING':'HITCH';updateDeliveryHud();drawMap();$('touch-jump').textContent=!state.grounded?(state.gliding?'FOLD':state.flightReady?'GLIDE':'JUMP'):'JUMP';}
@@ -982,6 +985,8 @@ if(import.meta.env.DEV&&new URLSearchParams(location.search).has('benchmark')) {
 }
 if(import.meta.env.DEV&&new URLSearchParams(location.search).has('check')) {
  import('./checks.js').then(({runChecks})=>runChecks({
+  refreshHud(){updateHud();updateRouteHint();},
+  render(){last=performance.now();draw(last);},
   reset(patch){coinSequence.reset();movableObstacles.reset();state=Object.assign(newRun(),patch);elapsed=0;mode='playing';clearKeys();for(const c of cars){c.z=10000+c.index*100;c.x=c.homeX;c.choices=routeChoices(c.index);c.braking=false;c.contact=false;Object.assign(c,trafficMotion(c.index,0),trafficSurface(c,roofs));c.driver=null;c.profileBraking=c.braking;}},
   alex,birdArt,flightArt,worldArt,environmentArt,skateboard,thiefArt,stampReady,deliveryArt,npcs,player,camera,renderer,sound,pickups,exhaust,boostBoard,state:()=>state,step:update,jump,hitch,controls:keys,roofs,cars,obstacles,movableObstacles,solidWorld,driverArt,roof:roofs[0],choose:chooseRoute,time:value=>elapsed=value,
   finish(){state=newRun();mode='menu';$('result').classList.add('hidden');},

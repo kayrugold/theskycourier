@@ -33,6 +33,47 @@
   #touch-boost { bottom: 108px; }
 }
 
+#map-toggle, #mobile-objective, #mobile-route, #mobile-notice { display:none; }
+
+/* Keep the riding view clear. Expanded navigation is a deliberate action. */
+@media (any-pointer: coarse), (max-width: 760px) {
+  #hud { --hud-top:max(10px,env(safe-area-inset-top)); padding:0; background:none; }
+  #hud .brand-small, .timer small, .stats span, .bottom-bar,
+  #toast, #route-hint, #hitch-hint, #rear-warning, #glider-status,
+  #boost-status, #delivery-cue { display:none !important; }
+  .timer { top:calc(var(--hud-top) + 2px); left:max(12px,env(safe-area-inset-left)); transform:none; }
+  .timer b { font-size:26px; line-height:38px; }
+  .stats { top:calc(var(--hud-top) + 4px); bottom:auto; left:72px; gap:12px; }
+  .stats small { font-size:6px; letter-spacing:.6px; }
+  .stats b { font-size:19px; line-height:24px; }
+  #pause, #map-toggle { position:absolute; top:var(--hud-top); width:42px; height:42px; min-width:42px; min-height:42px; }
+  #pause { right:max(10px,env(safe-area-inset-right)); }
+  #map-toggle { display:block; right:62px; pointer-events:auto; border:1px solid #ffffff40; border-radius:12px; background:#302a4699; color:#fff6e5; font-size:9px; font-weight:bold; touch-action:manipulation; }
+  #map-toggle[aria-expanded="true"] { background:#dbff78; color:#2d2840; }
+  .route-progress { top:calc(var(--hud-top) + 46px); left:12px; right:12px; width:auto; transform:none; height:2px; }
+  .route-progress span { display:none; }
+  #mobile-objective, #mobile-route { display:block; position:absolute; left:12px; top:calc(var(--hud-top) + 55px); max-width:calc(100% - 24px); padding:5px 8px; border-radius:6px; background:#29243c99; color:#fff4de; font-size:11px; font-weight:700; line-height:15px; white-space:nowrap; text-shadow:0 1px 2px #211b32; }
+  #mobile-route { top:calc(var(--hud-top) + 84px); color:#dbff78; }
+  #mobile-route:empty { display:none; }
+  #mobile-notice { display:block; position:absolute; left:136px; right:12px; bottom:max(20px,env(safe-area-inset-bottom)); padding:6px 8px; border-radius:6px; color:#fff4de; background:#29243ca8; font-size:11px; font-weight:700; line-height:15px; text-align:right; }
+  #mobile-notice:empty { display:none; }
+  #mobile-notice.danger { color:#ffd0bb; }
+  #delivery-panel { display:none; top:calc(var(--hud-top) + 54px); right:12px; width:162px; max-height:calc(100dvh - 144px); z-index:2; background:#29243cf5; }
+  body.mobile-map-open #delivery-panel { display:block; }
+  #delivery-panel #mini-map { width:160px; height:150px; }
+  #delivery-panel .delivery-heading { font-size:7px; padding:8px; }
+  #delivery-panel #job-text { font-size:10px; padding:8px; margin:0; }
+  #delivery-panel small { display:none; }
+  #touch-controls { display:block !important; pointer-events:none; }
+  #touch-controls .touch-steering, #touch-controls .touch-speed, #touch-hitch, #touch-jump { display:none; }
+  #touch-controls #touch-boost { position:fixed; bottom:max(12px,env(safe-area-inset-bottom)); left:max(12px,env(safe-area-inset-left)); width:112px; min-width:112px; height:48px; min-height:48px; padding:0 10px; border:1px solid #ffffff65; border-radius:14px; background:#302a46b8; color:#fff4de; font-size:12px; pointer-events:auto; }
+  #touch-controls #touch-boost.charged { background:#ffbd60; color:#302538; border-color:#ffce69; box-shadow:none; }
+  body[data-mode="playing"] .performance-panel { display:none; }
+}
+@media (max-height: 500px) and (any-pointer: coarse) {
+  #delivery-panel #mini-map { height:85px; }
+}
+
 @media(any-pointer:coarse){
  #touch-boost { min-width:130px; min-height:56px; border:2px solid #ffb84c; border-radius:16px; background:#342c41; color:#ffce69; font-weight:900; touch-action:manipulation; bottom:max(108px,env(safe-area-inset-bottom)); }
  #touch-boost.charged { background:linear-gradient(135deg,#ffce69,#ff8e3b); color:#302538; box-shadow:0 0 18px #ffb84c55; }
