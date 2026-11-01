@@ -1,5 +1,8 @@
 # Cloudflare Pages
 
+Live game: **https://theskycourier.pages.dev**. Production deploys automatically
+from `main` in https://github.com/kayrugold/theskycourier.
+
 Connect the public `kayrugold/theskycourier` GitHub repository to a Cloudflare
 Pages project. This game is a static Vite build; it needs no backend, database,
 secrets, or Worker.

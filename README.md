@@ -2,6 +2,9 @@
 
 A 3D, two-and-a-half-minute hoverboard delivery game built with Three.js and Vite. All assets are local, with no accounts, tracking, external asset servers, or purchases.
 
+**[Play The Sky Courier](https://theskycourier.pages.dev)** on desktop, tablet,
+or phone. In Chrome, use **Add to Home screen / Install app** for standalone play.
+
 ## Run
 
 Use Node.js 22.12+ and npm:
