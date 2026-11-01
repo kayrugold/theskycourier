@@ -1,0 +1,171 @@
+[
+  {
+    "id": "taxi",
+    "category": "vehicles",
+    "original_triangles": 15417,
+    "triangles": 6498,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.4585251212120056,
+      0.454974889755249,
+      0.9498512744903564
+    ]
+  },
+  {
+    "id": "semitruckwtrl1",
+    "category": "vehicles",
+    "original_triangles": 14736,
+    "triangles": 6452,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.2229054868221283,
+      0.314909964799881,
+      0.9555644989013672
+    ]
+  },
+  {
+    "id": "schoolbus",
+    "category": "vehicles",
+    "original_triangles": 14458,
+    "triangles": 6497,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.4235767722129822,
+      0.3781673312187195,
+      0.9481089115142822
+    ]
+  },
+  {
+    "id": "4doorredcar",
+    "category": "vehicles",
+    "original_triangles": 15344,
+    "triangles": 6499,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.44989922642707825,
+      0.37376049160957336,
+      0.9500327706336975
+    ]
+  },
+  {
+    "id": "4doorbluecar",
+    "category": "vehicles",
+    "original_triangles": 15264,
+    "triangles": 6499,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.41839706897735596,
+      0.3641381859779358,
+      0.9465516209602356
+    ]
+  },
+  {
+    "id": "4doorblackcar",
+    "category": "vehicles",
+    "original_triangles": 15382,
+    "triangles": 6469,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.4202411472797394,
+      0.3600026071071625,
+      0.9475326538085938
+    ]
+  },
+  {
+    "id": "nyctownhouse",
+    "category": "buildings",
+    "original_triangles": 13717,
+    "triangles": 5237,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.8317850828170776,
+      0.9501460194587708,
+      0.7809394598007202
+    ]
+  },
+  {
+    "id": "nycskyscraper",
+    "category": "buildings",
+    "original_triangles": 13664,
+    "triangles": 5454,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.5033301115036011,
+      0.9410048723220825,
+      0.4080600142478943
+    ]
+  },
+  {
+    "id": "nychighrise",
+    "category": "buildings",
+    "original_triangles": 13511,
+    "triangles": 5336,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.7685419321060181,
+      0.9425915479660034,
+      0.6456333994865417
+    ]
+  },
+  {
+    "id": "locomotive0",
+    "category": "trains",
+    "original_triangles": 14924,
+    "triangles": 5429,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.3098168969154358,
+      0.3999757468700409,
+      0.9567122459411621
+    ]
+  },
+  {
+    "id": "flatbed1",
+    "category": "trains",
+    "original_triangles": 13688,
+    "triangles": 5498,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.28854143619537354,
+      0.1975790113210678,
+      0.9526110887527466
+    ]
+  },
+  {
+    "id": "container2",
+    "category": "trains",
+    "original_triangles": 14273,
+    "triangles": 5486,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.30373063683509827,
+      0.3623353838920593,
+      0.9570561051368713
+    ]
+  },
+  {
+    "id": "container1",
+    "category": "trains",
+    "original_triangles": 15156,
+    "triangles": 5471,
+    "texture_size": 1024,
+    "wheels": "integrated mesh",
+    "proportions": [
+      0.29114270210266113,
+      0.36694100499153137,
+      0.952398419380188
+    ]
+  }
+]

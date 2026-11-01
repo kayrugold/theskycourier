@@ -1,0 +1,14 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {FBXLoader} from 'three/addons/loaders/FBXLoader.js';
+import {TextureLoader,Texture,Box3,Vector3} from 'three';
+globalThis.window={URL};
+TextureLoader.prototype.load=function(url){const texture=new Texture();texture.userData.source=url;return texture;};
+const root='assets/characters/alex/';
+const name='Meshy_AI_lowpoly_game_characte_1008102845_image-to-3d-texture.fbx';
+const data=await readFile(root+name);
+const model=new FBXLoader().parse(data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength),root);
+model.updateMatrixWorld(true);
+const report={source:name,bones:[],meshes:[],animations:model.animations.map(a=>a.name)};
+model.traverse(o=>{if(o.isBone)report.bones.push(o.name);if(o.isMesh)report.meshes.push({name:o.name,skinned:!!o.isSkinnedMesh,vertices:o.geometry.attributes.position.count,triangles:(o.geometry.index?.count||o.geometry.attributes.position.count)/3,uv:!!o.geometry.attributes.uv,materials:(Array.isArray(o.material)?o.material:[o.material]).map(m=>({name:m.name,map:!!m.map})),bounds:new Box3().setFromObject(o).getSize(new Vector3()).toArray()});});
+await writeFile(root+'alex-fbx-inspection.json',JSON.stringify(report,null,2));
+console.log(JSON.stringify(report,null,2));

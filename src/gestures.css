@@ -1,0 +1,6 @@
+@media(any-pointer:coarse){
+ .stats{bottom:65px;left:24px}
+ #hitch-hint{bottom:110px;right:18px}
+ #route-hint{bottom:190px;top:auto}
+ footer>span:first-child{display:none}
+}
